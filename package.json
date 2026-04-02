@@ -1,0 +1,23 @@
+{
+  "name": "loqui-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "install-all": "npm install --prefix backend && npm install --prefix frontend",
+    "build": "npm run install-all && npm run build --prefix frontend",
+    "start": "node backend/src/server.js",
+    "server": "npm run dev --prefix backend",
+    "client": "npm run dev --prefix frontend",
+    "dev": "concurrently --kill-others-on-fail --names \"server,client\" --prefix-colors \"cyan,magenta\" \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "A full-stack chat application",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
