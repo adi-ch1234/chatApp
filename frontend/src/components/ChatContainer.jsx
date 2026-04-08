@@ -7,6 +7,19 @@ import MessageInput from "./MessageInput";
 import MessagesLoadingSkeleton from "./MessagesLoadingSkeleton";
 import { FileIcon } from "lucide-react";
 
+/**
+ * Validates that a URL is safe to render (only allow Cloudinary or HTTPS URLs).
+ */
+function isSafeFileUrl(url) {
+  if (!url) return false;
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === "https:" && (parsed.hostname.endsWith("cloudinary.com") || parsed.hostname.endsWith("res.cloudinary.com"));
+  } catch {
+    return false;
+  }
+}
+
 function ChatContainer() {
   const {
     selectedUser,
@@ -23,7 +36,6 @@ function ChatContainer() {
     getMessagesByUserId(selectedUser._id);
     subscribeToMessages();
 
-    // clean up
     return () => unsubscribeFromMessages();
   }, [selectedUser, getMessagesByUserId, subscribeToMessages, unsubscribeFromMessages]);
 
@@ -52,9 +64,14 @@ function ChatContainer() {
                   }`}
                 >
                   {msg.image && (
-                    <img src={msg.image} alt="Shared" className="rounded-lg max-h-48 object-cover mb-2" />
+                    <img
+                      src={msg.image}
+                      alt="Shared image"
+                      className="rounded-lg max-h-48 object-cover mb-2"
+                      loading="lazy"
+                    />
                   )}
-                  {msg.fileUrl && (
+                  {msg.fileUrl && isSafeFileUrl(msg.fileUrl) && (
                     <a
                       href={msg.fileUrl.includes("cloudinary.com") ? msg.fileUrl.replace("/upload/", "/upload/fl_attachment/") : msg.fileUrl}
                       target="_blank"
@@ -78,7 +95,6 @@ function ChatContainer() {
                 </div>
               </div>
             ))}
-            {/* 👇 scroll target */}
             <div ref={messageEndRef} />
           </div>
         ) : isMessagesLoading ? (

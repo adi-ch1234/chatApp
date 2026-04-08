@@ -1,10 +1,13 @@
 import "dotenv/config";
 
+const REQUIRED_VARS = ["MONGO_URI", "JWT_SECRET", "CLIENT_URL"];
+const PLACEHOLDER_SECRETS = ["your_jwt_secret", "replace_with_a_strong_random_secret"];
+
 export const ENV = {
   PORT: process.env.PORT,
   MONGO_URI: process.env.MONGO_URI,
   JWT_SECRET: process.env.JWT_SECRET,
-  NODE_ENV: process.env.NODE_ENV,
+  NODE_ENV: process.env.NODE_ENV || "development",
   CLIENT_URL: process.env.CLIENT_URL,
   RESEND_API_KEY: process.env.RESEND_API_KEY,
   EMAIL_FROM: process.env.EMAIL_FROM,
@@ -15,3 +18,16 @@ export const ENV = {
   ARCJET_KEY: process.env.ARCJET_KEY,
   ARCJET_ENV: process.env.ARCJET_ENV,
 };
+
+// Validate critical environment variables at startup
+for (const key of REQUIRED_VARS) {
+  if (!ENV[key]) {
+    console.error(`❌ Missing required environment variable: ${key}`);
+    process.exit(1);
+  }
+}
+
+if (PLACEHOLDER_SECRETS.includes(ENV.JWT_SECRET)) {
+  console.error("❌ JWT_SECRET is set to a placeholder value. Please set a strong, random secret.");
+  process.exit(1);
+}

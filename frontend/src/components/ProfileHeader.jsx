@@ -2,8 +2,11 @@ import { useState, useRef } from "react";
 import { LogOutIcon, VolumeOffIcon, Volume2Icon } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
+import toast from "react-hot-toast";
 
 const mouseClickSound = new Audio("/sounds/mouse-click.mp3");
+
+const MAX_PROFILE_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
 
 function ProfileHeader() {
   const { logout, authUser, updateProfile } = useAuthStore();
@@ -15,6 +18,18 @@ function ProfileHeader() {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select an image file");
+      return;
+    }
+
+    // Validate file size
+    if (file.size > MAX_PROFILE_IMAGE_SIZE) {
+      toast.error("Image size must be less than 5MB");
+      return;
+    }
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -38,7 +53,7 @@ function ProfileHeader() {
             >
               <img
                 src={selectedImg || authUser.profilePic || "/avatar.png"}
-                alt="User image"
+                alt="User profile"
                 className="size-full object-cover"
               />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
@@ -71,6 +86,7 @@ function ProfileHeader() {
           <button
             className="text-slate-400 hover:text-slate-200 transition-colors"
             onClick={logout}
+            aria-label="Log out"
           >
             <LogOutIcon className="size-5" />
           </button>
@@ -79,11 +95,11 @@ function ProfileHeader() {
           <button
             className="text-slate-400 hover:text-slate-200 transition-colors"
             onClick={() => {
-              // play click sound before toggling
-              mouseClickSound.currentTime = 0; // reset to start
+              mouseClickSound.currentTime = 0;
               mouseClickSound.play().catch((error) => console.log("Audio play failed:", error));
               toggleSound();
             }}
+            aria-label={isSoundEnabled ? "Mute sounds" : "Enable sounds"}
           >
             {isSoundEnabled ? (
               <Volume2Icon className="size-5" />

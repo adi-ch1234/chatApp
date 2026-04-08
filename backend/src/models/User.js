@@ -6,10 +6,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
+      trim: true,
     },
     fullName: {
       type: String,
       required: true,
+      trim: true,
+      maxlength: 100,
     },
     password: {
       type: String,
@@ -19,9 +23,16 @@ const userSchema = new mongoose.Schema(
     profilePic: {
       type: String,
       default: "",
+      validate: {
+        validator: function (v) {
+          // Allow empty strings (default) or valid HTTPS URLs
+          return v === "" || /^https:\/\/.+/.test(v);
+        },
+        message: "Profile picture must be an HTTPS URL",
+      },
     },
   },
-  { timestamps: true } // createdAt & updatedAt
+  { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);
