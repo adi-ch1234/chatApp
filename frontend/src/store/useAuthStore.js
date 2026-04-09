@@ -89,17 +89,25 @@ export const useAuthStore = create((set, get) => ({
       existingSocket.disconnect();
     }
 
+    // 1. Initialize socket but DO NOT connect immediately
     const socket = io(BASE_URL, {
       withCredentials: true,
+      autoConnect: false, // THIS IS THE CRUCIAL FIX
+      // Optional but recommended for chat apps: forcefully send userId
+      query: {
+        userId: authUser._id,
+      },
     });
 
-    socket.connect();
-
-    set({ socket });
-
+    // 2. Set up your listeners FIRST
     socket.on("getOnlineUsers", (userIds) => {
       set({ onlineUsers: userIds });
     });
+
+    // 3. NOW connect to the server safely
+    socket.connect();
+
+    set({ socket });
   },
 
   disconnectSocket: () => {
@@ -107,6 +115,7 @@ export const useAuthStore = create((set, get) => ({
     if (socket?.connected) {
       socket.disconnect();
     }
-    set({ socket: null });
+    // Best practice: clear the online users array when logging out
+    set({ socket: null, onlineUsers: [] });
   },
 }));

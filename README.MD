@@ -36,7 +36,7 @@ RESEND_API_KEY=your_resend_api_key
 EMAIL_FROM=your_email_from_address
 EMAIL_FROM_NAME=your_email_from_name
 
-CLIENT_URL=http://localhost:5173
+CLIENT_URL=http://localhost:5174
 
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
