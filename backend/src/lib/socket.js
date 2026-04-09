@@ -41,4 +41,3 @@ io.on("connection", (socket) => {
 });
 
 export { io, app, server };
-n API, Saarthi API, DGFT API, IIMB API, NICDC API, E-way Bill API, Digilocker API
