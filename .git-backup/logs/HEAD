@@ -1,0 +1,10 @@
+0000000000000000000000000000000000000000 4d395942cb7f5dc359897f06b851921b6d9e8729 Aditya <adi.ch1234@gmail.com> 1775674543 +0530	commit (initial): phase 1 done
+4d395942cb7f5dc359897f06b851921b6d9e8729 bebda3d6dbfab378b0c822f7c68db14e5197c294 Aditya <adi.ch1234@gmail.com> 1775676955 +0530	commit: refactor: enhance security, improve error handling, and stabilize socket connections
+bebda3d6dbfab378b0c822f7c68db14e5197c294 5290647a884cf7c80441a65352525247121d14f8 Aditya <adi.ch1234@gmail.com> 1775753430 +0530	commit: done?
+5290647a884cf7c80441a65352525247121d14f8 401b0a7b2a40076073d0b7ab8b21b2c5ffb503be Aditya <adi.ch1234@gmail.com> 1775753469 +0530	commit: done?
+401b0a7b2a40076073d0b7ab8b21b2c5ffb503be c6d6c89156de2f05ea58805dbacacbcac9ff0325 Aditya <adi.ch1234@gmail.com> 1775765682 +0530	commit: Fix: fixed issues
+c6d6c89156de2f05ea58805dbacacbcac9ff0325 a12aac6592fff06481dc5e633a974e37aeacff04 Aditya <adi.ch1234@gmail.com> 1775768431 +0530	commit: Fix: fixed the video calling and file transfer problem
+a12aac6592fff06481dc5e633a974e37aeacff04 a234380ee71f6798c3655bd3fbaf42404b49a6d7 Aditya <adi.ch1234@gmail.com> 1775913337 +0530	commit: Integrated video calling using webRTC
+a234380ee71f6798c3655bd3fbaf42404b49a6d7 622d1bbb54c3dee3ecf03b557e1fba62b9c3f8ce Aditya <adi.ch1234@gmail.com> 1775935775 +0530	commit: Added google oath service and email verification by otp
+622d1bbb54c3dee3ecf03b557e1fba62b9c3f8ce 3f24c5b9c6e1b30ecffc366c6fb7dc99acf08f00 Aditya <adi.ch1234@gmail.com> 1776861453 +0530	commit: changed the user interface
+3f24c5b9c6e1b30ecffc366c6fb7dc99acf08f00 8d3f67d7c2738afbf139614411c0c27be617b060 Aditya <adi.ch1234@gmail.com> 1776951123 +0530	commit: Improved chatsection UI and theme improveement
