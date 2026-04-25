@@ -6,7 +6,7 @@ import { useCallStore } from "./useCallStore";
 
 // In development, point directly to the backend process.
 // In production, Socket.IO is served from the same origin as the frontend.
-const SOCKET_URL = import.meta.env.MODE === "development" ? "http://localhost:3000" : "/";
+const SOCKET_URL = import.meta.env.MODE === "development" ? "http://localhost:3000" : "https://chatapp-backend-aice.onrender.com";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,

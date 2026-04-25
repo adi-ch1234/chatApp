@@ -1,8 +1,7 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  // Relative URL works in both dev (Vite proxy → localhost:3000) and production
-  baseURL: "/api",
+  baseURL: import.meta.env.MODE === "development" ? "/api" : "https://chatapp-backend-aice.onrender.com/api",
   withCredentials: true,
   timeout: 30000,
 });
