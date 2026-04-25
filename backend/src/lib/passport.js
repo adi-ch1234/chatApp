@@ -22,7 +22,7 @@ passport.use(
     {
       clientID: ENV.GOOGLE_CLIENT_ID,
       clientSecret: ENV.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${ENV.CLIENT_URL.replace("5173", "3000")}/api/auth/google/callback`,
+      callbackURL: `${ENV.BACKEND_URL}/api/auth/google/callback`,
       scope: ["profile", "email"],
     },
     async (_accessToken, _refreshToken, profile, done) => {
