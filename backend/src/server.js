@@ -27,7 +27,9 @@ app.use(express.json({ limit: "15mb" }));
 app.use(express.urlencoded({ extended: false, limit: "15mb" }));
 
 // CORS
-app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
+// Strip trailing slash from CLIENT_URL if it exists to prevent CORS origin mismatch
+const clientOrigin = ENV.CLIENT_URL?.replace(/\/$/, "") || "";
+app.use(cors({ origin: clientOrigin, credentials: true }));
 
 // Cookie parser
 app.use(cookieParser());

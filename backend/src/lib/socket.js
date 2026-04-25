@@ -17,9 +17,11 @@ import { registerWebRTCSignaling } from "./webrtcSignaling.js";
 const app = express();
 const server = http.createServer(app);
 
+const clientOrigin = ENV.CLIENT_URL?.replace(/\/$/, "") || "";
+
 const io = new Server(server, {
   cors: {
-    origin: [ENV.CLIENT_URL],
+    origin: [clientOrigin],
     credentials: true,
   },
 });
