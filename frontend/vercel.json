@@ -7,6 +7,10 @@
     {
       "source": "/socket.io/:path*",
       "destination": "https://chatapp-backend-aice.onrender.com/socket.io/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
