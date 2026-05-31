@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://chatapp-backend-aice.onrender.com/api/:path*"
+      "destination": "https://chatapp-backend-g4ys.onrender.com/api/:path*"
     },
     {
       "source": "/socket.io/:path*",
-      "destination": "https://chatapp-backend-aice.onrender.com/socket.io/:path*"
+      "destination": "https://chatapp-backend-g4ys.onrender.com/socket.io/:path*"
     },
     {
       "source": "/(.*)",
