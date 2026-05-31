@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import { sendWelcomeEmail, sendOtpEmail } from "../emails/emailHandlers.js";
@@ -297,4 +298,9 @@ export const updateProfile = asyncHandler(async (req, res) => {
   ).select("-password");
 
   res.status(200).json(updatedUser);
+});
+// ── SOCKET TOKEN ──────────────────────────────────────────────────────────────
+export const getSocketToken = asyncHandler(async (req, res) => {
+  const token = jwt.sign({ userId: req.user._id }, ENV.JWT_SECRET, { expiresIn: "1h" });
+  res.json({ token });
 });
