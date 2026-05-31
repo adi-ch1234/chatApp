@@ -6,7 +6,7 @@ import { useCallStore } from "./useCallStore";
 
 // In development, point directly to the backend process.
 // In production, Socket.IO is served from the same origin as the frontend.
-const SOCKET_URL = import.meta.env.MODE === "development" ? "http://localhost:3000" : "https://chatapp-backend-g4ys.onrender.com";
+const SOCKET_URL = import.meta.env.MODE === "development" ? "http://localhost:3000" : "https://loqui-app-alpha.vercel.app";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -172,12 +172,12 @@ export const useAuthStore = create((set, get) => ({
     }
 
     // 1. Create socket with autoConnect disabled so we wire listeners first
-   const token = document.cookie.split("; ").find(row => row.startsWith("jwt="))?.split("=")[1];
+  
 const socket = io(SOCKET_URL, {
   withCredentials: true,
   autoConnect: false,
+  transports: ["polling"],
   query: { userId: authUser._id },
-  auth: { token },
 });
 
     // 2. Register chat-level listeners
