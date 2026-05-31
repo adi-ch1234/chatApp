@@ -162,35 +162,37 @@ export const useAuthStore = create((set, get) => ({
    * a direct call (no dynamic import) because Zustand stores are initialized
    * lazily inside action bodies, so mutual imports between stores are safe.
    */
-  connectSocket: () => {
+ connectSocket: async () => {
     const { authUser, socket: existingSocket } = get();
     if (!authUser) return;
 
-    // Tear down the old socket first to prevent duplicate connections
     if (existingSocket?.connected) {
       existingSocket.disconnect();
     }
 
-    // 1. Create socket with autoConnect disabled so we wire listeners first
-  
-const socket = io(SOCKET_URL, {
-  withCredentials: true,
-  autoConnect: false,
-  transports: ["polling"],
-  query: { userId: authUser._id },
-});
+    let socketToken = null;
+    try {
+      const { data } = await axiosInstance.get("/auth/socket-token");
+      socketToken = data.token;
+    } catch (e) {
+      console.warn("[Socket] Could not fetch socket token:", e.message);
+    }
 
-    // 2. Register chat-level listeners
+    const socket = io(SOCKET_URL, {
+      auth: { token: socketToken },
+      withCredentials: true,
+      autoConnect: false,
+      transports: ["polling"],
+      query: { userId: authUser._id },
+    });
+
     socket.on("getOnlineUsers", (userIds) => {
       set({ onlineUsers: userIds });
     });
 
-    // 3. Register WebRTC call listeners (direct call — no dynamic import needed)
     useCallStore.getState().subscribeToCallEvents(socket);
 
-    // 4. Now connect — all handlers are ready
     socket.connect();
-
     set({ socket });
   },
 
