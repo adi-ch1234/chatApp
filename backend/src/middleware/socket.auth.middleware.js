@@ -11,10 +11,12 @@ import { ENV } from "../lib/env.js";
 export const socketAuthMiddleware = async (socket, next) => {
   try {
     // Extract the JWT from the incoming HTTP-only cookie header
-    const token = socket.handshake.headers.cookie
-      ?.split("; ")
-      .find((row) => row.startsWith("jwt="))
-      ?.split("=")[1];
+    const token =
+  socket.handshake.auth?.token ||
+  socket.handshake.headers.cookie
+    ?.split("; ")
+    .find((row) => row.startsWith("jwt="))
+    ?.split("=")[1];
 
     if (!token) {
       console.warn("[Socket] Connection rejected: No token provided");
