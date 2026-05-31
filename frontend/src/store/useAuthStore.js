@@ -172,11 +172,13 @@ export const useAuthStore = create((set, get) => ({
     }
 
     // 1. Create socket with autoConnect disabled so we wire listeners first
-    const socket = io(SOCKET_URL, {
-      withCredentials: true,
-      autoConnect: false,
-      query: { userId: authUser._id },
-    });
+   const token = document.cookie.split("; ").find(row => row.startsWith("jwt="))?.split("=")[1];
+const socket = io(SOCKET_URL, {
+  withCredentials: true,
+  autoConnect: false,
+  query: { userId: authUser._id },
+  auth: { token },
+});
 
     // 2. Register chat-level listeners
     socket.on("getOnlineUsers", (userIds) => {
